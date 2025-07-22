@@ -17,9 +17,9 @@ jobs:
       - name: Build on ${{ matrix.os }}
         env:
           GO111MODULE: on
+          CGO_ENABLED: 0
         run: |
-          go mod download
-          go build -o minio.exe github.com/minio/minio
+          go build -trimpath -ldflags="-s -w" -o .\minio.exe .\cmd
 
       - name: Upload MinIO binary
         uses: actions/upload-artifact@v4

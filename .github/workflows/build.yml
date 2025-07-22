@@ -1,0 +1,28 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - last-working
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Build on ${{ matrix.os }}
+        env:
+          GO111MODULE: on
+        run: |
+          go mod download
+          go build -o minio.exe github.com/minio/minio
+
+      - name: Upload MinIO binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.os }}-minio
+          path: minio.exe

@@ -19,7 +19,8 @@ jobs:
           GO111MODULE: on
           CGO_ENABLED: 0
         run: |
-          go build -trimpath -ldflags="-s -w" -o .\minio.exe .\cmd
+          go mod download
+          go build -trimpath -ldflags="-s -w" -o minio.exe .\cmd
 
       - name: Upload MinIO binary
         uses: actions/upload-artifact@v4

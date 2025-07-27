@@ -10,20 +10,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [windows-latest, ubuntu-latest, ubuntu-24.04-arm]
     steps:
       - uses: actions/checkout@v4
 
       - name: Download Deps
         run: |
-          # go mod tidy
           go mod download
       
       - name: Build on ${{ matrix.os }}
-        # env:
-        #   CGO_ENABLED: 0
-        #   GOOS: windows
-        #   GOARCH: amd64
+        env:
+          CGO_ENABLED: 0
         run: |
           go build -trimpath -ldflags="-s -w" -o minio.exe .
 
@@ -35,4 +32,4 @@ jobs:
 
       - name: Test minio
         run: |
-          ./minio.exe version
+          ./minio.exe --version

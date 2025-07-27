@@ -20,10 +20,10 @@ jobs:
           go mod download
       
       - name: Build on ${{ matrix.os }}
-        env:
-          # CGO_ENABLED: 0
-          # GOOS: windows
-          # GOARCH: amd64
+        # env:
+        #   CGO_ENABLED: 0
+        #   GOOS: windows
+        #   GOARCH: amd64
         run: |
           go build -trimpath -ldflags="-s -w" -o minio.exe ./cmd
 

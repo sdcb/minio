@@ -16,7 +16,7 @@ jobs:
 
       - name: Download Deps
         run: |
-          go mod tidy
+          # go mod tidy
           go mod download
       
       - name: Build on ${{ matrix.os }}
@@ -25,7 +25,7 @@ jobs:
         #   GOOS: windows
         #   GOARCH: amd64
         run: |
-          go build -trimpath -ldflags="-s -w" -o minio.exe ./cmd
+          go build -trimpath -ldflags="-s -w" -o minio.exe .
 
       - name: Upload MinIO binary
         uses: actions/upload-artifact@v4
